@@ -7,20 +7,19 @@ var height = Dimensions.get('window').height; //full height
 export default function Container(props) {
     console.log(width)
     return(
-        <TouchableOpacity onPress={() => props.navigation.navigate('container', { 
+        <TouchableOpacity key={props._id} onPress={() => props.navigation.navigate('container', { 
             content: { 
-                id: '',
-                title: '', 
+                key: props.key,
+                title: props.title,
+                description: props.description,
+                images: props.images, 
                 city: props.city,
-                tag: props.tag                
+                tag: props.tag,       
             }
         })}>
-            <View key={props.title} 
-            style={{ padding: 5, display:'flex', flexDirection:'row', width: width-180 }} 
-        >
+            <View style={{ padding: 5, display:'flex', flexDirection:'row', width: width-180 }}>
             <View style={{ margin: 5 }}>
-                <Image style={{ width: 160, height: 200 }} 
-                    source={{uri: props.img_uri}} />
+                <Image style={{ width: 160, height: 200 }} source={{uri: props.images[1]}} />
             </View>            
             <View style={{marginRight: 0}}>
                 <View>

@@ -1,4 +1,4 @@
-import React ,{ useState } from 'react';
+import React ,{ useState, useEffect} from 'react';
 import {Button, StyleSheet, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Button_tag from '../component/button_tag';
@@ -7,25 +7,29 @@ import Content from './content';
 import config from '../config';
 import axios from 'axios';
 
-config.API_URI
 // Globale
 const tags = ["barlığı", "qonaq üy", "meyramxana", "kafe", "murajaylar"]
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
-const ccontainers
 
 function Main({navigation}) {
+    const getUrlpath = `${config.API_URI}/questeri/get/all`;
     const [currentTag, setCurrentTag] = useState('barlığı');
-    
+    const [containers, setContainers] = useState([]);
+
     const ChangeCurrentTag = (newTag) => {
         setCurrentTag(newTag)
     }
 
-    const getContent = async() => {
-        const req = await axios.get(`${config.API_URI}/questeri/get/all`)
-        console.log(res)
+    const featData = async () => {
+        let response = await axios.get(getUrlpath);
+        console.log(response.data)
+        setContainers(response.data)
     }
-    getContent()
+    
+    useEffect(() => {
+        featData()
+    }, [])
 
     return(
         <SafeAreaView>
@@ -49,17 +53,19 @@ function Main({navigation}) {
                 </View>
                 <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
                     <View style={{justifyContent: 'center'}}>
-                        {
+                        { 
                             containers.map((vel) => (
                                 <Container 
+                                    key={vel._id}
                                     navigation={navigation}
                                     title={vel.title}
-                                    img_uri={vel.img_uri}
+                                    images={vel.imgPath}
                                     description={vel.description}
                                     tag={vel.tag}
                                     city={vel.city}
                                 />
                             ))
+                          
                         }
                     </View>
                    
@@ -69,6 +75,7 @@ function Main({navigation}) {
         </SafeAreaView>
     )
 }
+
 export default function Quests() {
     const Stack = createNativeStackNavigator();
     return (
