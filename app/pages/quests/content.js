@@ -1,12 +1,18 @@
 import React ,{ useState } from 'react';
 import {Button, Image, ScrollView, SafeAreaView, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import ReviewsLine from '../../component/review_line';
+import SlaiderImages from '../../component/slaiderImages';
+import axios from 'axios';
+import config from '../../config';
+
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
-
 // title, dis, imgs,  #tag
 export default function Content(props) {
     let IconKBU =  "https://www.topuniversities.com/sites/default/files/profiles/logos/academician-y.a.-buketov-karaganda-university_592560cf2aeae70239af52e9_large.jpg"
+    
+    const [saved, setSaved] = useState(false)
 
     let autherIs = false
     let reviewsIs = false
@@ -19,44 +25,56 @@ export default function Content(props) {
     const autherIcon        = autherIs      ? props.route.params.content.auther.icon        : IconKBU
     const autherName        = autherIs      ? props.route.params.content.auther.name        : "Akademık E. A. Bóketov atyndaǵy Qaraǵandy ýnıversıtetis"
     const images            = imagesIs      ? props.route.params.content.images             : []
-    const reviewsNumber     = reviewsIs     ? props.route.params.content.reviews.number     : '4.9'
-    const reviewsLineOne    = reviewsIs     ? props.route.params.content.reviews.line.one   : 9
-    const reviewsLineTwo    = reviewsIs     ? props.route.params.content.reviews.line.two   : 6
-    const reviewsLineThree  = reviewsIs     ? props.route.params.content.reviews.line.three : 0
-    const reviewsLineFour   = reviewsIs     ? props.route.params.content.reviews.line.four  : 0
+    const reviewsNumber     = reviewsIs     ? props.route.params.content.reviews.number     : 4.9
+
+    const ReviewsLineMap = [
+        [5, reviewsIs ? props.route.params.content.reviews.line.one   : 9], 
+        [4, reviewsIs ? props.route.params.content.reviews.line.two   : 6], 
+        [3, reviewsIs ? props.route.params.content.reviews.line.three : 3], 
+        [2, reviewsIs ? props.route.params.content.reviews.line.four  : 0]
+    ]
+
+    const savedRequestApi = async(path) => {
+        let res = await axios.post(`${config.API_URI}${path}`, {
+            questeri_id: props.route.params.content.key,
+            user_id: 1234,
+        })
+        return res
+    }
+    
+    const onPressSaved = async () => {
+        if(saved) {
+            let res = await savedRequestApi('/saved/delete')
+            console.log(res.status)
+            if(res.status >= 200 && res.status < 400) {
+                setSaved(false)
+            }
+        }
+        else{
+            let res = await savedRequestApi('/saved/add')
+            console.log(res.status)
+            if(res.status >= 200 && res.status < 400) {
+                setSaved(true)
+            }
+        }
+    }
+
+    const onPressRederact = () => {
+        props.navigation.navigate('Tests', {
+            content: {
+                kvestterid: props.route.params.content.key,
+                image: images[0],
+                title: props.route.params.content.title
+            }
+        })
+    }
 
     return(
-        <View key={props.route.params.content.key}>
+        <View key={props.route.params.content.key+props.route.params.content.title+ props.route.params.content.tag}>
             <SafeAreaView style={{position: 'relative'}}>
                 <ScrollView bounces={false} horizontal={false} showsHorizontalScrollIndicator={false} >
                 <View>
-                    <ScrollView style={{ position: 'relative', }} 
-                        horizontal={true} 
-                        showsHorizontalScrollIndicator={false} 
-                        >
-                            {
-                                images.map((img) => <Image style={{ 
-                                    width: width, height: 220 
-                                    }}   
-                                    source={{ uri: img }}
-                                />
-                                )
-                            }
-                    </ScrollView>
-                    <View style={{ 
-                        position: 'absolute',
-                        width: width, 
-                        display: 'flex', flexDirection: 'row', justifyContent: 'center', 
-                        padding: 5,
-                        top: 170,
-                    }}>  
-                        <Text style={{ 
-                            fontSize: 20, fontWeight: '300', 
-                            color: 'white'
-                        }}>
-                            {props.route.params.content.title}
-                        </Text>
-                    </View>
+                    <SlaiderImages title={props.route.params.content.title} images={props.route.params.content.images} />
                 </View>
                 <View style={{ 
                     paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, 
@@ -67,9 +85,10 @@ export default function Content(props) {
                         <Text>#{props.route.params.content.tag}</Text>
                     </View>
                     <View>
-                        <Ionicons name={ false ? 'bookmark' : 'bookmark-outline'} 
+                        <Ionicons name={ saved ? 'bookmark' : 'bookmark-outline'} 
                             size={24} 
-                            color={"black"} 
+                            color={"black"}
+                            onPress={() => onPressSaved()}
                         />
                     </View>
                 </View>
@@ -116,7 +135,7 @@ export default function Content(props) {
                 </View>
 
                 {/* Avtor */}
-                <View style={{ paddingTop: 2, paddingBottom: 12, paddingLeft: 12, paddingRight: 12, }}>
+                <View style={{ width: width, paddingTop: 2, paddingBottom: 12, paddingLeft: 12, paddingRight: 12, }}>
                     <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Avtor</Text>
                     
                     <View style={{
@@ -130,8 +149,8 @@ export default function Content(props) {
                     }}>
                         <Image style={{ paddingTop: 5, paddingBottom: 5, paddingRight: 8, 
                             width: 60, height: 60, borderRadius: 15, }} source={{ uri: autherIcon }} />
-                        <View style={{ paddingTop: 5, paddingBottom: 5, paddingRight: 10, paddingLeft: 10, }}>
-                            <Text style={{ textAlign: 'left' }}>{autherName}</Text>
+                        <View style={{ width: width-62, paddingTop: 5, paddingBottom: 5, paddingRight: 10, paddingLeft: 10, }}>
+                            <Text style={{ textAlign: 'left', }}>{autherName}</Text>
                         </View>
                     </View>
                 </View>
@@ -139,8 +158,16 @@ export default function Content(props) {
                 {/* reviews */}
                 <View style={{ paddingTop: 2, paddingBottom: 12, paddingLeft: 12, paddingRight: 12, }}>
                     <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Pikirler</Text>
-                    <View style={{  }}>
-                        <Text style={{fontSize: 60, }}>{reviewsNumber}</Text>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', }}>
+                        <View style={{  paddingLeft: 12, paddingRight: 12, }}>
+                            <Text style={{fontSize: 60, }}>{reviewsNumber}</Text>
+                        </View>
+                        <View style={{ }}>
+                            {/* 1 <= line <= 10 */}
+                            {
+                                ReviewsLineMap.map((i)=> <ReviewsLine number={i[0]} line={i[1]} />)
+                            }
+                        </View>
                     </View>
                 </View>
                 <View style={{ height: 90 }} />
@@ -152,11 +179,9 @@ export default function Content(props) {
                     backgroundColor: '#fff',
                 }}
             >
-                <TouchableOpacity onPress={()=> console.log("berik")}>
+                <TouchableOpacity onPress={()=> onPressRederact()}>
                         <View>
-                            <Text>
-                                kvest suraqtaryn tapsyrý
-                            </Text>
+                            <Text style={{ fontWeight: '400', fontSize: 14, }}>kvest suraqtaryn tapsyrý</Text>
                         </View> 
                 </TouchableOpacity>
             </View> 

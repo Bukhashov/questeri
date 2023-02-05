@@ -1,10 +1,11 @@
 import React ,{ useState, useEffect} from 'react';
 import {Button, StyleSheet, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Button_tag from '../component/button_tag';
-import Container from '../component/container';
+import Button_tag from '../../component/button_tag';
+import Container from '../../component/container';
 import Content from './content';
-import config from '../config';
+import Tests from './tests';
+import config from '../../config';
 import axios from 'axios';
 
 // Globale
@@ -23,7 +24,6 @@ function Main({navigation}) {
 
     const featData = async () => {
         let response = await axios.get(getUrlpath);
-        console.log(response.data)
         setContainers(response.data)
     }
     
@@ -32,7 +32,8 @@ function Main({navigation}) {
     }, [])
 
     return(
-        <SafeAreaView>
+        <View>
+        <SafeAreaView key={"questeries_Map"}>
             <View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center', }} >
@@ -65,14 +66,12 @@ function Main({navigation}) {
                                     city={vel.city}
                                 />
                             ))
-                          
                         }
                     </View>
-                   
-                
                 </ScrollView>
             </View>
         </SafeAreaView>
+    </View>
     )
 }
 
@@ -89,6 +88,11 @@ export default function Quests() {
                 name="container" 
                 options={{ headerShown: false }} 
                 component={Content}
+            />
+            <Stack.Screen
+                name="Tests"
+                options={{ headerShown: false }}
+                component={Tests}
             />
           </Stack.Navigator>
     );

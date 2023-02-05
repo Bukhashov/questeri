@@ -8,7 +8,7 @@ export default function Container(props) {
     console.log(width)
     return(
         <TouchableOpacity key={props._id} onPress={() => props.navigation.navigate('container', { 
-            content: { 
+            content: {
                 key: props.key,
                 title: props.title,
                 description: props.description,

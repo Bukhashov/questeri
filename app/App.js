@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Quests from './pages/quests';
+import Quests from './pages/quests/quests';
 import Like from  './pages/like';
 import Map from './pages/map';
 import Account from './pages/account';
