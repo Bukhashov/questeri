@@ -8,7 +8,7 @@ import config from '../config';
 import axios from 'axios';
 
 // Globale
-const tags = ["barlığı", "qonaq üy", "meyramxana", "kafe", "murajaylar"]
+const tags = ["barlığı", "qalamen tanysý", "murajaıdaǵy kvesterı", "jergilikti taǵamdar", "balalarǵa arnalǵan"]
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 

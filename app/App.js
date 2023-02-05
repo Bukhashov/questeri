@@ -19,8 +19,7 @@ export default function App() {
         screenOptions={({route}) => ({
           headerShown: true,
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if(route.name === "Quests") {
+            if(route.name === "Kvestter") {
               return <Ionicons 
                 name={ focused 
                   ? 'ios-information-circle' 
@@ -30,7 +29,7 @@ export default function App() {
                 color={color} 
                 />
             } 
-            else if(route.name === "Saqtawlı") {
+            else if(route.name === "saqtaý") {
               return <Ionicons 
                 name={ focused 
                   ? 'bookmark' 
@@ -62,8 +61,8 @@ export default function App() {
           tabBarActiveTintColor: 'black',
         })}
       >
-        <Tab.Screen name="Quests" component={Quests} />
-        <Tab.Screen name="Saqtawlı" component={Like} />
+        <Tab.Screen name="Kvestter" component={Quests} />
+        <Tab.Screen name="saqtaý" component={Like} />
         <Tab.Screen name="Karta" component={Map} />
         <Tab.Screen name="Account" component={Account} />
       </Tab.Navigator>

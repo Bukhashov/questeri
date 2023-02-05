@@ -11,7 +11,7 @@ export default function Button_tag(props) {
                 }}
             >
                 <Button 
-                    color="#000" 
+                    color="#000"
                     title={'#'+props.tag} 
                     key={props.tag.toString()} 
                     onPress={()=> props.changeCurrentTag(props.tag) }
