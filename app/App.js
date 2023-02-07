@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Quests from './pages/quests/quests';
 import Like from  './pages/like';
 import Map from './pages/map';
-import Account from './pages/account';
+import Account from './pages/account/main.js';
 
 export default function App() {
   const Tab = createBottomTabNavigator();

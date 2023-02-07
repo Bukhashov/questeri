@@ -14,6 +14,7 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 function Main({navigation}) {
+
     const getUrlpath = `${config.API_URI}/questeri/get/all`;
     const [currentTag, setCurrentTag] = useState('barlığı');
     const [containers, setContainers] = useState([]);
@@ -32,46 +33,50 @@ function Main({navigation}) {
     }, [])
 
     return(
-        <View>
-        <SafeAreaView key={"questeries_Map"}>
-            <View>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center', }} >
+        <>
+        <View key={"questeries_Map"}>
+            <SafeAreaView>
+                <View>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <View style={{ padding: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', }} >
                             {
-                                tags.map((tag) =>  <Button_tag tag={tag} changeCurrentTag={ChangeCurrentTag} /> )
+                                tags.map((tag) => (
+                                    <Button_tag tag={tag} changeCurrentTag={ChangeCurrentTag} /> 
+                                ))
                             }
                         </View>
-                </ScrollView>
-            </View>
-            <View>
-                <View style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', paddingTop: 10, paddingBottom: 6, paddingLeft: 15, paddingRight: 15, }} >
-                    <View> 
-                        <Text>Karaganda</Text>
-                    </View>
-                    <View> 
-                        <Text>#{currentTag}</Text>
-                    </View>
+                    </ScrollView>
                 </View>
-                <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-                    <View style={{justifyContent: 'center'}}>
-                        { 
-                            containers.map((vel) => (
-                                <Container 
-                                    key={vel._id}
-                                    navigation={navigation}
-                                    title={vel.title}
-                                    images={vel.imgPath}
-                                    description={vel.description}
-                                    tag={vel.tag}
-                                    city={vel.city}
-                                />
-                            ))
-                        }
+                <View>
+                    <View style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', paddingTop: 10, paddingBottom: 6, paddingLeft: 15, paddingRight: 15, }} >
+                        <View> 
+                            <Text>Karaganda</Text>
+                        </View>
+                        <View> 
+                            <Text>#{currentTag}</Text>
+                        </View>
                     </View>
-                </ScrollView>
-            </View>
-        </SafeAreaView>
-    </View>
+                    <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
+                        <View style={{justifyContent: 'center'}}>
+                            { 
+                                containers.map((vel) => (
+                                    <Container 
+                                        key={vel._id}
+                                        navigation={navigation}
+                                        title={vel.title}
+                                        images={vel.imgPath}
+                                        description={vel.description}
+                                        tag={vel.tag}
+                                        city={vel.city}
+                                    />
+                                ))
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
+        </View>
+    </>
     )
 }
 
@@ -98,9 +103,7 @@ export default function Quests() {
     );
 }
 
-
 const style = StyleSheet.create({
-
     // Content
     content_title: {
         display: 'flex',
