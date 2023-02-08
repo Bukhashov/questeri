@@ -18,6 +18,16 @@ export default function Singin({navigation}) {
         setPassword(userPassword)
     }
     
+    const getUserSaved = async (uid) => {
+        const res = await axios.post(`${config.API_URI}/singin`, {
+            user_id: uid
+        })
+        if(res.status >= 200 && res.status < 400){
+            
+            await AsyncStorage.setItem("usaved", res.data);
+        }
+    }
+
     const onPressLogin = async () => {
         const res = await axios.post(`${config.API_URI}/singin`, {
             email: login,
@@ -25,10 +35,13 @@ export default function Singin({navigation}) {
         })
         
         if(res.status >= 200 && res.status < 400){
-            await AsyncStorage.setItem('uid', res.data.uid)
-            await AsyncStorage.setItem('fullname', res.data.fullname)
-            await AsyncStorage.setItem('email', res.data.email)
-            await AsyncStorage.setItem('city', res.data.city)
+            await AsyncStorage.setItem('uid', res.data.uid);
+            await AsyncStorage.setItem('fullname', res.data.fullname);
+            await AsyncStorage.setItem('email', res.data.email);
+            await AsyncStorage.setItem('city', res.data.city);
+            
+            await getUserSaved(res.data.uid);
+            
             navigation.navigate('Acc')
         }
         setLogin("")
