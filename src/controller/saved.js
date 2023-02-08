@@ -5,8 +5,7 @@ class Saved{
     getAll = async (req, res) => {
         const user_id = req.body.user_id;
         const allSavedById = await savedModel.find({user_id: user_id})
-        console.log(allSavedById)
-        
+
         let savedQuesteri = []
         
         if (allSavedById.length >= 1) {            
