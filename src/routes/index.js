@@ -13,7 +13,7 @@ router.get('/questeri/get/all', Questeri.getAll);
 router.get('/questeri/get/:id', Questeri.getById);
 router.post('/questeri/add', Questeri.add);
 
-router.post('/saved/all', Saved.getAll);
+router.post('/saved/get/', Saved.getAll);
 router.post('/saved/add', Saved.add);
 router.post('/saved/delete', Saved.delete);
 

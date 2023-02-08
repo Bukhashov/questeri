@@ -1,10 +1,13 @@
 import React ,{ useState, useEffect} from 'react';
-import {Button, StyleSheet, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
+import {Button, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// components
 import Button_tag from '../../component/button_tag';
 import Container from '../../component/container';
+// pages
 import Content from './content';
 import Tests from './tests';
+
 import config from '../../config';
 import axios from 'axios';
 
@@ -41,7 +44,11 @@ function Main({navigation}) {
                         <View style={{ padding: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', }} >
                             {
                                 tags.map((tag) => (
-                                    <Button_tag tag={tag} changeCurrentTag={ChangeCurrentTag} /> 
+                                    <Button_tag 
+                                        key={tag} 
+                                        tag={tag} 
+                                        changeCurrentTag={ChangeCurrentTag} 
+                                    /> 
                                 ))
                             }
                         </View>
@@ -102,23 +109,3 @@ export default function Quests() {
           </Stack.Navigator>
     );
 }
-
-const style = StyleSheet.create({
-    // Content
-    content_title: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        paddingTop: 10,
-        paddingBottom: 6,
-        paddingLeft: 15,
-        paddingRight: 15,
-        // borderBottomWidth: width,
-    },
-    connect: {
-        margin: 15,
-        width: width-35,
-        height: 250,
-        backgroundColor: '#000'
-    },
-})

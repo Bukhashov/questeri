@@ -74,7 +74,7 @@ export default function Content(props) {
             <SafeAreaView style={{position: 'relative'}}>
                 <ScrollView bounces={false} horizontal={false} showsHorizontalScrollIndicator={false} >
                 <View>
-                    <SlaiderImages title={props.route.params.content.title} images={props.route.params.content.images} />
+                    <SlaiderImages key={"slaider_images__"+props.route.params.content.title} title={props.route.params.content.title} images={props.route.params.content.images} />
                 </View>
                 <View style={{ 
                     paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, 
@@ -165,7 +165,7 @@ export default function Content(props) {
                         <View style={{ }}>
                             {/* 1 <= line <= 10 */}
                             {
-                                ReviewsLineMap.map((i)=> <ReviewsLine number={i[0]} line={i[1]} />)
+                                ReviewsLineMap.map((i)=> <ReviewsLine key={"content_reviews_line_"+i[0]+i[1]} number={i[0]} line={i[1]} />)
                             }
                         </View>
                     </View>

@@ -9,10 +9,10 @@ var width = Dimensions.get('window').width; //full width
 
 export default function SlaiderImages(props) {
     return(
-        <View key={"slaider_images"+props.title+props.title}>
+        <View key={props.key}>
             <ScrollView style={{ position: 'relative', }} horizontal={true} showsHorizontalScrollIndicator={false}>
                 {
-                    props.images.map((image) => <Image style={{ width: width, height: 220 }} source={{ uri: image }}/> )
+                    props.images.map((image) => <Image key={"slaider_image__"+ props.title} style={{ width: width, height: 220 }} source={{ uri: image }}/> )
                 }
             </ScrollView>
             

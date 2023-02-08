@@ -49,7 +49,7 @@ export default function Acc({navigation}) {
     let userInf = [['Tolyq aty', userFullName], ['Email', userEmail], ['Qala', userCity], ['Ball', 200]]
 
     return(
-        <View>
+        <View key={"navigator_account_main_acc"}>
             <View style={{ paddingTop: 20, }}>
                 {/* user image */}
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -58,7 +58,7 @@ export default function Acc({navigation}) {
                 {/* user info */}
                 <View style={{ }}>
                 {
-                    userInf.map((inf) =>  <UserInfo option={inf[0]} info={inf[1]} /> )
+                    userInf.map((inf) =>  <UserInfo key={inf[1]+inf[0]} option={inf[0]} info={inf[1]} /> )
                 }
                 </View>
                 
