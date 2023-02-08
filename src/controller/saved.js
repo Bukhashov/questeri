@@ -5,7 +5,8 @@ class Saved{
     getAll = async (req, res) => {
         const user_id = req.body.user_id;
         const allSavedById = await savedModel.find({user_id: user_id})
-        
+
+        console.log(allSavedById)
         let savedQuesteri = []
         if (allSavedById.length >= 1) {            
             for(let i = 0; i < allSavedById.length; i++) {
@@ -13,6 +14,7 @@ class Saved{
                 savedQuesteri.push(questeri)
                 console.log(savedQuesteri)
             }
+
             res.status(200).json(savedQuesteri)
         }
     }
