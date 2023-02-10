@@ -1,6 +1,8 @@
-import React ,{ useState } from 'react';
-import {Button, Image, ScrollView, SafeAreaView, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import React ,{ useState, useEffect } from 'react';
+import {Button, Image,  ScrollView, SafeAreaView, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReviewsLine from '../../component/review_line';
 import SlaiderImages from '../../component/slaiderImages';
 import axios from 'axios';
@@ -13,6 +15,7 @@ export default function Content(props) {
     let IconKBU =  "https://www.topuniversities.com/sites/default/files/profiles/logos/academician-y.a.-buketov-karaganda-university_592560cf2aeae70239af52e9_large.jpg"
     
     const [saved, setSaved] = useState(false)
+    const [uid, setUid] = useState("");
 
     let autherIs = false
     let reviewsIs = false
@@ -34,15 +37,53 @@ export default function Content(props) {
         [2, reviewsIs ? props.route.params.content.reviews.line.four  : 0]
     ]
 
+    useFocusEffect(
+        React.useCallback(() => {
+            async function userinfo(){
+                await setUid(await AsyncStorage.getItem("uid"))
+                
+            }
+            async function savedControl() {
+                if(uid) {
+                    try{
+                        await axios.post(`${config.API_URI}/saved/control`, {
+                            questeri_id: props.route.params.content.id,
+                            user_id: uid
+                        })
+
+                        setSaved(true)
+                    }
+                    catch(e) {
+                        setSaved(false)
+                    }
+                }
+            }
+            console.log(props.route.params.content.key)
+            userinfo()
+        }, [])
+    )
+
     const savedRequestApi = async(path) => {
-        let res = await axios.post(`${config.API_URI}${path}`, {
-            questeri_id: props.route.params.content.key,
-            user_id: 1234,
-        })
+        let res = ""
+        try{
+            res = await axios.post(`${config.API_URI}${path}`, {
+                questeri_id: props.route.params.content.key,
+                user_id: uid,
+            })
+        }
+        catch(e){
+            setSaved(false)
+        }
         return res
+       
     }
     
     const onPressSaved = async () => {
+        console.log(await AsyncStorage.getItem("uid"))
+        if(uid == "" || uid == null) {
+            props.navigation.navigate("Acc")
+        }
+
         if(saved) {
             let res = await savedRequestApi('/saved/delete')
             console.log(res.status)

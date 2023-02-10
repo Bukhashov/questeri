@@ -5,11 +5,11 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 export default function Container(props) {
-    console.log(width)
     return(
         <TouchableOpacity key={props.key} onPress={() => props.navigation.navigate('container', { 
             content: {
                 key: props.key,
+                id: props.id,
                 title: props.title,
                 description: props.description,
                 images: props.images, 

@@ -38,6 +38,18 @@ class Saved{
         }
 
     }
+    control = async (req, res) => {
+        const questeri_id = req.body.questeri_id;
+        const user_id = req.body.user_id;
+
+        const questControl = await savedModel.findOne({questeri_id: questeri_id, user_id: user_id});
+        if(questControl){
+            res.status(200).json({saved: true})
+        }else{
+            res.status(200).json({saved: false})
+        }
+    }
+
     delete = async (req, res) => {
         const questeri_id = req.body.questeri_id;
         const user_id = req.body.user_id;

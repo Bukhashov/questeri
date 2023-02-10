@@ -16,6 +16,7 @@ router.post('/questeri/add', Questeri.add);
 router.post('/saved/get/', Saved.getAll);
 router.post('/saved/add', Saved.add);
 router.post('/saved/delete', Saved.delete);
+router.post('/saved/control', Saved.control);
 
 router.post('/test/get', Test.getById)
 router.post('/test/control', Test.control)

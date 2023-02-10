@@ -17,6 +17,19 @@ export default function Singin({navigation}) {
     const onPressChangeTextInputPassword = (userPassword) => {
         setPassword(userPassword)
     }
+
+    const getAllSaved = async (userId) => {
+        try{
+            let res = await axios.post(`${config.API_URI}/saved/get/`, {
+                user_id: userId
+            })
+            await AsyncStorage.setItem('saved', JSON.stringify(res.data));
+        }
+        catch(e) {
+            await AsyncStorage.setItem('saved', "");
+        }
+    }
+    
     
     const onPressLogin = async () => {
         try{
@@ -29,8 +42,9 @@ export default function Singin({navigation}) {
             await AsyncStorage.setItem('fullname', res.data.fullname);
             await AsyncStorage.setItem('email', res.data.email);
             await AsyncStorage.setItem('city', res.data.city);
-            
-            console.log(await AsyncStorage.getItem('usaved'))
+
+            getAllSaved(res.data.uid)
+
             navigation.navigate('Acc')
         }
         catch(e){
@@ -74,7 +88,8 @@ export default function Singin({navigation}) {
                      {/* password */}
                         <View style={{paddingBottom: 15, paddingTop: 15,}}>
                             <TextInput
-                                numberOfLines={1} maxLength={50}
+                                numberOfLines={1} 
+                                maxLength={50}
                                 onChangeText={uPass => onPressChangeTextInputPassword(uPass)} 
                                 value={password}
                                 style={{ width: 230, height: 32, padding: 8, borderColor: '#000', borderWidth: 1, }}

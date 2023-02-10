@@ -17,26 +17,14 @@ export default function Acc({navigation}) {
     useFocusEffect(
         React.useCallback(() => {
             async function userinfo(){
-                setUid(await AsyncStorage.getItem("uid"))
+                await setUid(await AsyncStorage.getItem("uid"))
                 if(!uid) navigation.navigate('Singin')
                 setUserFullName(await AsyncStorage.getItem("fullname"))
                 setUserEmail(await AsyncStorage.getItem("email"))
             }
             userinfo()
-        })
+        }, [])
     )
-
-    // useEffect(()=> {
-    //     const control = async () => {
-    //         setUid(await AsyncStorage.getItem("uid"))
-
-    //         if(uid) navigation.navigate('Singin')
-
-    //         setUserFullName(await AsyncStorage.getItem("fullname"))
-    //         setUserEmail(await AsyncStorage.getItem("fullname"))
-    //     }
-    //     control()
-    // }, [])
  
     const onPressLogOut = async () => {
         await AsyncStorage.removeItem("uid")

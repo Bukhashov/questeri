@@ -28,7 +28,7 @@ function Main({navigation}) {
 
     const featData = async () => {
         let response = await axios.get(getUrlpath);
-        setContainers(response.data)
+        await setContainers(response.data)
     }
     
     useEffect(() => {
@@ -69,6 +69,7 @@ function Main({navigation}) {
                                 containers.map((vel) => (
                                     <Container 
                                         key={vel._id}
+                                        id={vel._id}
                                         navigation={navigation}
                                         title={vel.title}
                                         images={vel.imgPath}

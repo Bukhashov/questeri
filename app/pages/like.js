@@ -1,5 +1,5 @@
 import React ,{ useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from './../component/container';
@@ -10,36 +10,35 @@ export default function Link({navigation}) {
     const [saved, setSaved] = useState([]);
     const [uid, setUid] = useState("");
 
-    const userControl = async() => {
-        setUid(await AsyncStorage.getItem("uid"))
-        if(!uid){
-            navigation.navigate("Account")
-        }
-    }
-    const getAllSaved= async () => {
-        try{
-            let res = await axios.post(`${config.API_URI}/saved/get/`, {
-                user_id: uid
-            });
-            console.log(res.data)
-            setSaved(res.data)
-        }catch(e){
-            setSaved([])
-        }
-    }
+
     useFocusEffect(
-        React.useCallback(() => {
-            function controller(){
-                userControl()
-                getAllSaved()
+        React.useCallback(()=> {    
+            async function getSaved() {
+                let allSavedObj = await AsyncStorage.getItem("saved");
+                let allSaved = JSON.parse(allSavedObj);
+                setSaved(allSaved)
             }
-            controller()
-        })
+            getSaved()
+        }, [])
     )
 
     return(
-        <View>
-            
-        </View>
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
+            <View>
+            {
+                saved.map((save) => (
+                    <Container 
+                        key={save.title + save._id}
+                        navigation={navigation}
+                        description={save.description}
+                        title={save.title}
+                        images={save.imgPath}
+                        tag={save.tag}
+                        city={save.city}
+                    />
+                ))
+            }
+            </View>
+        </ScrollView>
     )
 }
