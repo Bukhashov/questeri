@@ -37,15 +37,23 @@ export default function Singin({navigation}) {
                 email: login,
                 password: password
             })
-
-            await AsyncStorage.setItem('uid', res.data.uid);
-            await AsyncStorage.setItem('fullname', res.data.fullname);
-            await AsyncStorage.setItem('email', res.data.email);
-            await AsyncStorage.setItem('city', res.data.city);
-
-            getAllSaved(res.data.uid)
-
-            navigation.navigate('Acc')
+            await AsyncStorage.setItem('uid', res.data.uid)
+            .then(
+                async () => await AsyncStorage.setItem('fullname', res.data.fullname)
+            )
+            .then(
+                async () => await AsyncStorage.setItem('email', res.data.email)
+            )
+            .then(
+                async () => await AsyncStorage.setItem('city', res.data.city)
+            )
+            .then(
+                async () => await getAllSaved(res.data.uid)
+            )
+            .then(
+                () => navigation.navigate('Acc')
+            )
+            
         }
         catch(e){
             setLogin("")

@@ -3,7 +3,7 @@ import {Button, View} from 'react-native';
 
 export default function Button_tag(props) {
     return(
-        <View key={props.key} 
+        <View key={"button_tag__title_"+props.id} 
             style={{padding: 5, 
             flexDirection: 'row', 
             alignItems: 'center'}}

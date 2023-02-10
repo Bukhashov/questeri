@@ -6,9 +6,9 @@ var height = Dimensions.get('window').height; //full height
 
 export default function Container(props) {
     return(
-        <TouchableOpacity key={props.key} onPress={() => props.navigation.navigate('container', { 
+        <TouchableOpacity key={"container__title_"+props.title+"_id_"+props.id} onPress={() => props.navigation.navigate('container', { 
             content: {
-                key: props.key,
+                key: props.id,
                 id: props.id,
                 title: props.title,
                 description: props.description,

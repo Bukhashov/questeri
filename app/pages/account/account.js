@@ -8,8 +8,8 @@ var width = Dimensions.get('window').width;
 
 export default function Acc({navigation}) {
     const [uid, setUid] = useState("")
-    const [userFullName, setUserFullName] = useState("Bukhashov Berik");
-    const [userEmail, setUserEmail] = useState("bukhashov@mail.ru");
+    const [userFullName, setUserFullName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
     const [userCity, setUserCity] = useState("Karaganda");
 
     const imgIconUri = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
@@ -17,10 +17,16 @@ export default function Acc({navigation}) {
     useFocusEffect(
         React.useCallback(() => {
             async function userinfo(){
-                await setUid(await AsyncStorage.getItem("uid"))
-                if(!uid) navigation.navigate('Singin')
-                setUserFullName(await AsyncStorage.getItem("fullname"))
-                setUserEmail(await AsyncStorage.getItem("email"))
+                await AsyncStorage.getItem("uid").then((data) => {
+                    if(data == "" || data == null) navigation.navigate('Singin')
+                    setUid(data)
+                })
+                await AsyncStorage.getItem("fullname").then((data) => {
+                    setUserFullName(data)
+                })
+                await AsyncStorage.getItem("email").then((data) => {
+                    setUserEmail(data)
+                })
             }
             userinfo()
         }, [])
@@ -32,6 +38,7 @@ export default function Acc({navigation}) {
         await AsyncStorage.removeItem("email")
 
         navigation.navigate('Singin')
+        return
     }
     
     let userInf = [['Tolyq aty', userFullName], ['Email', userEmail], ['Qala', userCity], ['Ball', 200]]
@@ -46,7 +53,7 @@ export default function Acc({navigation}) {
                 {/* user info */}
                 <View style={{ }}>
                 {
-                    userInf.map((inf) =>  <UserInfo key={inf[1]+inf[0]} option={inf[0]} info={inf[1]} /> )
+                    userInf.map((inf) =>  <UserInfo key={"Account_UserInfo__"+inf[1]+inf[0]} option={inf[0]} info={inf[1]} /> )
                 }
                 </View>
                 

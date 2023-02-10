@@ -10,13 +10,16 @@ export default function Link({navigation}) {
     const [saved, setSaved] = useState([]);
     const [uid, setUid] = useState("");
 
-
     useFocusEffect(
         React.useCallback(()=> {    
             async function getSaved() {
-                let allSavedObj = await AsyncStorage.getItem("saved");
-                let allSaved = JSON.parse(allSavedObj);
-                setSaved(allSaved)
+                await AsyncStorage.getItem("uid").then((id) => {
+                    if(id == "" || id == null) navigation.navigate("Account");
+                    setUid(id)
+                });
+                await AsyncStorage.getItem("saved").then((data) => {
+                    setSaved(JSON.parse(data))
+                })
             }
             getSaved()
         }, [])

@@ -5,7 +5,7 @@ export default function ReviewsLine(props) {
     let ReviewsLineWidth = (220/100)*(props.line * 10);
 
     return(
-        <View key={props.key} style={{ padding: 2, display: 'flex', flexDirection: 'row', alignItems: 'center', }}>
+        <View key={"key_content_reviews_line__number"+props.number+"_line_"+props.line} style={{ padding: 2, display: 'flex', flexDirection: 'row', alignItems: 'center', }}>
             <Text style={{ paddingTop: 1, paddingBottom: 1, paddingLeft: 0, paddingRight: 8 }}>{props.number}</Text>
             <View style={{
                 paddingTop: 1, paddingBottom: 1, paddingLeft: 0, paddingRight: 0,

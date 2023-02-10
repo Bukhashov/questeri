@@ -37,29 +37,33 @@ export default function Content(props) {
         [2, reviewsIs ? props.route.params.content.reviews.line.four  : 0]
     ]
 
+    const savedControl = async (id) => {
+        try{
+            const res = await axios.post(`${config.API_URI}/saved/control`, {
+                questeri_id: props.route.params.content.id,
+                user_id: id
+            }).then((res) => {
+                if(res.data.saved == true || res.data.saved == false) setSaved(res.data.saved)
+                else setSaved(false)
+            })
+            // console.log(props.route.params.content.id)
+            // console.log(id)
+            // console.log(res.data.saved)
+        }
+        catch(e) {
+            setSaved(false)
+        }
+    }
+
     useFocusEffect(
         React.useCallback(() => {
-            async function userinfo(){
-                await setUid(await AsyncStorage.getItem("uid"))
-                
+            async function control() {
+                await AsyncStorage.getItem("uid").then(async(id)=> {
+                    if(id) await savedControl(id)       
+                    setUid(id)
+                })
             }
-            async function savedControl() {
-                if(uid) {
-                    try{
-                        await axios.post(`${config.API_URI}/saved/control`, {
-                            questeri_id: props.route.params.content.id,
-                            user_id: uid
-                        })
-
-                        setSaved(true)
-                    }
-                    catch(e) {
-                        setSaved(false)
-                    }
-                }
-            }
-            console.log(props.route.params.content.key)
-            userinfo()
+            control();
         }, [])
     )
 
@@ -74,28 +78,24 @@ export default function Content(props) {
         catch(e){
             setSaved(false)
         }
-        return res
-       
+        return res   
     }
     
     const onPressSaved = async () => {
-        console.log(await AsyncStorage.getItem("uid"))
         if(uid == "" || uid == null) {
-            props.navigation.navigate("Acc")
+            props.navigation.navigate("Account");
+            return;
         }
-
         if(saved) {
             let res = await savedRequestApi('/saved/delete')
-            console.log(res.status)
             if(res.status >= 200 && res.status < 400) {
-                setSaved(false)
+                setSaved(false);
             }
         }
         else{
             let res = await savedRequestApi('/saved/add')
-            console.log(res.status)
             if(res.status >= 200 && res.status < 400) {
-                setSaved(true)
+                setSaved(true);
             }
         }
     }
@@ -111,11 +111,15 @@ export default function Content(props) {
     }
 
     return(
-        <View key={props.route.params.content.key+props.route.params.content.title+ props.route.params.content.tag}>
+        <View key={props.route.params.content.id}>
             <SafeAreaView style={{position: 'relative'}}>
                 <ScrollView bounces={false} horizontal={false} showsHorizontalScrollIndicator={false} >
                 <View>
-                    <SlaiderImages key={"slaider_images__"+props.route.params.content.title} title={props.route.params.content.title} images={props.route.params.content.images} />
+                    <SlaiderImages key={props.route.params.content.id} 
+                        id={props.route.params.content.id}
+                        title={props.route.params.content.title} 
+                        images={props.route.params.content.images} 
+                    />
                 </View>
                 <View style={{ 
                     paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10, 
@@ -206,7 +210,11 @@ export default function Content(props) {
                         <View style={{ }}>
                             {/* 1 <= line <= 10 */}
                             {
-                                ReviewsLineMap.map((i)=> <ReviewsLine key={"content_reviews_line_"+i[0]+i[1]} number={i[0]} line={i[1]} />)
+                                ReviewsLineMap.map((i)=> <ReviewsLine 
+                                    key={"content_reviews_line_"+i[0]+i[1]} 
+                                    number={i[0]} 
+                                    line={i[1]} 
+                                    />)
                             }
                         </View>
                     </View>

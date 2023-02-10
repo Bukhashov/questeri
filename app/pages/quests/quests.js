@@ -17,7 +17,6 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 function Main({navigation}) {
-
     const getUrlpath = `${config.API_URI}/questeri/get/all`;
     const [currentTag, setCurrentTag] = useState('barlığı');
     const [containers, setContainers] = useState([]);
@@ -44,7 +43,8 @@ function Main({navigation}) {
                         <View style={{ padding: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', }} >
                             {
                                 tags.map((tag) => (
-                                    <Button_tag 
+                                    <Button_tag
+                                        id={tag}
                                         key={tag} 
                                         tag={tag} 
                                         changeCurrentTag={ChangeCurrentTag} 

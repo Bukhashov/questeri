@@ -9,7 +9,7 @@ var width = Dimensions.get('window').width; //full width
 
 export default function UserInfo(props) {
     return(
-        <View key={"user"+props.key} style={{ paddingTop: 20, }}>
+        <View key={"Account_UserInfo_key__option_"+props.option} style={{ paddingTop: 20, }}>
             <View style={{ paddingBottom: 8, paddingLeft: 22, paddingRight: 25, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={{ paddingBottom: 3, color: '#616A6B'}}>{props.option}</Text>
                 <Text>{props.info}</Text>
