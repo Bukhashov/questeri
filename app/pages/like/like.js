@@ -2,9 +2,9 @@ import React ,{ useState, useEffect} from 'react';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Container from './../component/container';
+import Container from '../../component/container';
 import axios from 'axios';
-import config from './../config';
+import config from '../../config';
 
 export default function Link({navigation}) {
     const [saved, setSaved] = useState([]);
@@ -13,13 +13,21 @@ export default function Link({navigation}) {
     useFocusEffect(
         React.useCallback(()=> {    
             async function getSaved() {
-                await AsyncStorage.getItem("uid").then((id) => {
-                    if(id == "" || id == null) navigation.navigate("Account");
-                    setUid(id)
-                });
-                await AsyncStorage.getItem("saved").then((data) => {
-                    setSaved(JSON.parse(data))
-                })
+                try{
+                    await AsyncStorage.getItem("uid").then(async(id) => {
+                        if(id == "" || id == null) navigation.navigate("Account");
+                        setUid(id)
+                    });
+
+                    await axios.post(`${config.API_URI}/saved/get/`, {
+                        user_id: uid
+                    }).then((res) => setSaved(res.data))
+                }
+                catch(e){
+                    console.log("uid"+uid)
+                    console.log("saved"+saved)
+                    setSaved([]);
+                }
             }
             getSaved()
         }, [])
@@ -32,6 +40,7 @@ export default function Link({navigation}) {
                 saved.map((save) => (
                     <Container 
                         key={save.title + save._id}
+                        id={save._id}
                         navigation={navigation}
                         description={save.description}
                         title={save.title}

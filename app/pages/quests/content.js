@@ -39,16 +39,13 @@ export default function Content(props) {
 
     const savedControl = async (id) => {
         try{
-            const res = await axios.post(`${config.API_URI}/saved/control`, {
+            await axios.post(`${config.API_URI}/saved/control`, {
                 questeri_id: props.route.params.content.id,
                 user_id: id
             }).then((res) => {
                 if(res.data.saved == true || res.data.saved == false) setSaved(res.data.saved)
                 else setSaved(false)
             })
-            // console.log(props.route.params.content.id)
-            // console.log(id)
-            // console.log(res.data.saved)
         }
         catch(e) {
             setSaved(false)
@@ -59,7 +56,7 @@ export default function Content(props) {
         React.useCallback(() => {
             async function control() {
                 await AsyncStorage.getItem("uid").then(async(id)=> {
-                    if(id) await savedControl(id)       
+                    if(id) await savedControl(id) 
                     setUid(id)
                 })
             }

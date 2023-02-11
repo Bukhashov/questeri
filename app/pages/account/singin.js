@@ -18,19 +18,6 @@ export default function Singin({navigation}) {
         setPassword(userPassword)
     }
 
-    const getAllSaved = async (userId) => {
-        try{
-            let res = await axios.post(`${config.API_URI}/saved/get/`, {
-                user_id: userId
-            })
-            await AsyncStorage.setItem('saved', JSON.stringify(res.data));
-        }
-        catch(e) {
-            await AsyncStorage.setItem('saved', "");
-        }
-    }
-    
-    
     const onPressLogin = async () => {
         try{
             let res = await axios.post(`${config.API_URI}/singin`, {
@@ -46,9 +33,6 @@ export default function Singin({navigation}) {
             )
             .then(
                 async () => await AsyncStorage.setItem('city', res.data.city)
-            )
-            .then(
-                async () => await getAllSaved(res.data.uid)
             )
             .then(
                 () => navigation.navigate('Acc')
