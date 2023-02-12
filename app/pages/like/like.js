@@ -14,18 +14,17 @@ export default function Link({navigation}) {
         React.useCallback(()=> {    
             async function getSaved() {
                 try{
-                    await AsyncStorage.getItem("uid").then(async(id) => {
+                    await AsyncStorage.getItem("uid").then(async (id) => {
                         if(id == "" || id == null) navigation.navigate("Account");
+                        
                         setUid(id)
-                    });
-
-                    await axios.post(`${config.API_URI}/saved/get/`, {
-                        user_id: uid
-                    }).then((res) => setSaved(res.data))
+                        
+                        await axios.post(`${config.API_URI}/saved/get/`, {
+                            user_id: id
+                        }).then((res) => setSaved(res.data))
+                    });   
                 }
                 catch(e){
-                    console.log("uid"+uid)
-                    console.log("saved"+saved)
                     setSaved([]);
                 }
             }

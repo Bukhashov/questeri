@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View,} from 'react-native';
+import {Text, View, Pressable} from 'react-native';
 
 // 
 // images   type    [] map
@@ -7,9 +7,13 @@ import {Text, View,} from 'react-native';
 //
 
 export default function Test(props) {
+    const choice = () => {
+        props.choiceVariant(props.variant)
+    }
+
     return(
-        <View key={props.title}>
-            
-        </View>
+        <Pressable onPress={() => choice()} style={{padding: 5, marginBottom: 5, marginTop: 5, backgroundColor: "#ABB2B9" }} key={props.variant}>
+            <Text style={{textAlign: 'center', fontSize: 16, color: "#fff"}}>{props.variant}</Text>
+        </Pressable>
     )
 } 

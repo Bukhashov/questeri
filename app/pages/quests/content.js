@@ -100,6 +100,7 @@ export default function Content(props) {
     const onPressRederact = () => {
         props.navigation.navigate('Tests', {
             content: {
+                id: props.route.params.content.id,
                 kvestterid: props.route.params.content.key,
                 image: images[0],
                 title: props.route.params.content.title
