@@ -24,8 +24,6 @@ export default function Tests(props){
     const [result, setResult] = useState(false);
     const [ball, setBall] = useState(0);
     
-    // let answers = [];
-    
     useFocusEffect(
         React.useCallback(()=> {
             async function getTests() {
