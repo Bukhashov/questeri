@@ -4,8 +4,12 @@ class Questeri {
     getAll = async (req, res) => {
         const questeri = await questeriModel.find({city: 'Karaganda'})
         
+        console.log("req all questeri")
+
         if(questeri.length >= 1) {
+            console.log(questeri.length)
             res.status(200).json(questeri)
+            
         }else{
             res.status(400).json({massage: "error"})
         }

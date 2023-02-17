@@ -1,6 +1,6 @@
-import React ,{ useState, useEffect} from 'react';
-import {Button, StyleSheet, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import React,{useState} from 'react';
+import {TouchableOpacity, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../config';
 import axios from 'axios';
@@ -18,10 +18,13 @@ export default function Tests(props){
     const [tests, setTests] = useState(null);
     const [uid, setUid] = useState("");
     const [testCount, setTestCount] = useState(0);
-    const [backCount, setBackCount] = useState(false);
-    const [runCount, setRunCount] = useState(true);
-
+    const [finish, setFinish] = useState(false);
     const [auth, setAuth] = useState(false);
+    const [answers, setAnswers] = useState([]);
+    const [result, setResult] = useState(false);
+    const [ball, setBall] = useState(0);
+    
+    // let answers = [];
     
     useFocusEffect(
         React.useCallback(()=> {
@@ -49,18 +52,45 @@ export default function Tests(props){
     )
 
     if(!tests) return <View><Text>loading...</Text></View>
-    if(tests) console.log(tests)
-
 
     const choiceVariant = (variant) => {
-        console.log(variant)
+        let answer = {question: tests[testCount].question, answer: variant};
+        
+        setAnswers(answers.filter(item => item.question != tests[testCount].question))
+        setAnswers([...answers, answer])
+
+        if(testCount != tests.length-1) setTestCount(testCount+1)
+        if(testCount == tests.length-2) setFinish(true);
     }
 
-    // if (testCount == tests.length) setRunCount(false);
-    // else setRunCount(true);
-    
-    // if (testCount == 0) setBackCount(false);
-    // else setBackCount(true);
+    const onPressBack = () => {
+        if(testCount != 0) {
+            setTestCount(testCount-1);
+            setFinish(false);
+        }
+    }
+    const onPressRun = async () => {
+        if(testCount != tests.length-1) {
+            setTestCount(testCount+1)
+            setFinish(false)
+        }
+        if(testCount == tests.length-2) setFinish(true);
+    }
+
+    const onPressFinish = async () => {
+        try{
+            await axios.post(`${config.API_URI}/test/control`, {
+                user_id: uid,
+                questeri_id: props.route.params.content.id,
+                answers: JSON.stringify(answers)
+            }).then((res) => {
+                setResult(true)
+                setBall(res.data.count)
+            })
+        }catch(e){
+            console.log(e)
+        }
+    }
 
     return(
         <View key={props.route.params.content.id}>
@@ -75,8 +105,9 @@ export default function Tests(props){
                        </View>
                     </View>
                     {/* Tests */}
-                    <View style={auth ? {display: 'flex'} : {display: 'none'}}> 
-                        <View style={{paddingTop: 15, paddingLeft: 20, paddingRight: 20}}>
+                    <View style={auth ? {display: 'flex'} : {display: 'none'}}>
+                        <View style={result ? {display: 'none'} : {display: 'flex'}}>
+                            <View style={{paddingTop: 15, paddingLeft: 20, paddingRight: 20}}>
                             <Text style={{color: "", fontSize: 18, textAlign: 'center', }}>{testCount+1}. {tests[testCount].question}</Text>
                             
                             <View style={{ paddingTop: 15, paddingBottom: 15, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -86,10 +117,40 @@ export default function Tests(props){
                             <View>
                                 {
                                     tests[testCount].option.map((otp) => (
-                                        <TestComponent key={"tests_variants_keys__id"+tests[testCount]._id+"_var_"+otp} variant={otp} choiceVariant={choiceVariant} />
+                                        <TestComponent 
+                                            key={"tests_variants_keys__id"+tests[testCount]._id+"_var_"+otp} 
+                                            
+                                            variant={otp} 
+                                            choiceVariant={choiceVariant} 
+                                            />
                                     ))
                                 }
                             </View>    
+                            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', }}>
+                                <TouchableOpacity onPress={() => onPressBack()}>
+                                    <View>
+                                        <Text>artqa</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => onPressRun()}>
+                                    <View>
+                                        <Text>kelesi</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => onPressFinish()}
+                                    style={finish 
+                                    ? {display: 'flex', justifyContent: 'center', flexDirection: 'row', } 
+                                    : {display: 'none'}}> 
+                                    <Text style={{ marginTop: 15, marginBottom: 5, paddingTop: 10,
+                                        fontSize: 16, fontWeight: '500',}}>Finish</Text>
+                                </TouchableOpacity>
+                            </View>
+                            </View>
+                        </View>
+                        <View style={result ? {display: 'flex'} : {display: 'none'}}>
+                            <Text>{ball}</Text>
                         </View>
                     </View>
                 </ScrollView>

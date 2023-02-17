@@ -17,8 +17,7 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 function Main({navigation}) {
-    const getUrlpath = `${config.API_URI}/questeri/get/all`;
-    const [currentTag, setCurrentTag] = useState('barlığı');
+    const [currentTag, setCurrentTag] = useState(tags[0]);
     const [containers, setContainers] = useState([]);
 
     const ChangeCurrentTag = (newTag) => {
@@ -26,8 +25,13 @@ function Main({navigation}) {
     }
 
     const featData = async () => {
-        let response = await axios.get(getUrlpath);
-        await setContainers(response.data)
+        try{
+            console.log(`${config.API_URI}/questeri/get/all`)
+            await axios.get(`${config.API_URI}/questeri/get/all`)
+            .then((response) => setContainers(response.data))
+        }catch(e){
+            console.log(e)
+        }
     }
     
     useEffect(() => {
