@@ -43,4 +43,21 @@ with USB
 expo start --localhost --android
 ````
 
-![main](https://github.com/Bukhashov/questeri/doc/image/main.jpg)
+## MENU 
+> Quester
+
+<img src="doc/image/main.jpg" width="350" height="750" />
+<img src="doc/image/questeri_info.jpg" width="350" height="750" />
+
+> Tests
+
+<img src="doc/image/questeri_test.jpg" width="350" height="750" />
+<img src="doc/image/questeri_test_ball.jpg" width="350" height="750" />
+
+> Saved
+
+<img src="doc/image/saved.jpg" width="350" height="750" />
+
+> Account
+
+<img src="doc/image/acc.jpg" width="350" height="750" />
