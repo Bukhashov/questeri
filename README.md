@@ -46,18 +46,18 @@ expo start --localhost --android
 ## MENU 
 > Quester
 
-<img src="doc/image/main.jpg" width="350" height="750" />
-<img src="doc/image/questeri_info.jpg" width="350" height="750" />
+<img src="doc/image/main.jpg" width="250" height="550" />
+<img src="doc/image/questeri_info.jpg" width="250" height="550" />
 
 > Tests
 
-<img src="doc/image/questeri_test.jpg" width="350" height="750" />
-<img src="doc/image/questeri_test_ball.jpg" width="350" height="750" />
+<img src="doc/image/questeri_test.jpg" width="250" height="750" />
+<img src="doc/image/questeri_test_ball.jpg" width="250" height="750" />
 
 > Saved
 
-<img src="doc/image/saved.jpg" width="350" height="750" />
+<img src="doc/image/saved.jpg" width="250" height="750" />
 
 > Account
 
-<img src="doc/image/acc.jpg" width="350" height="750" />
+<img src="doc/image/acc.jpg" width="250" height="750" />
