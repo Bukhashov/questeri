@@ -1,5 +1,5 @@
 import React ,{ useState, useEffect} from 'react';
-import {Button, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
+import {ActivityIndicator, ScrollView, SafeAreaView, Text, View, Dimensions} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // components
 import Button_tag from '../../component/button_tag';
@@ -17,6 +17,7 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 function Main({navigation}) {
+    const [isLoading, setLoading] = useState(true);
     const [currentTag, setCurrentTag] = useState(tags[0]);
     const [containers, setContainers] = useState([]);
 
@@ -28,7 +29,10 @@ function Main({navigation}) {
         try{
             console.log(`${config.API_URI}/questeri/get/all`)
             await axios.get(`${config.API_URI}/questeri/get/all`)
-            .then((response) => setContainers(response.data))
+            .then((response) => {
+                setContainers(response.data)
+                setLoading(false)
+            })
         }catch(e){
             console.log(e)
         }
@@ -39,26 +43,32 @@ function Main({navigation}) {
     }, [])
 
     return(
-        <>
         <View key={"questeries_Map"}>
-            <SafeAreaView>
-                <View>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={{ padding: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', }} >
-                            {
-                                tags.map((tag) => (
-                                    <Button_tag
-                                        id={tag}
-                                        key={tag} 
-                                        tag={tag} 
-                                        changeCurrentTag={ChangeCurrentTag} 
-                                    /> 
-                                ))
-                            }
+            {
+                isLoading ? (
+                    <ActivityIndicator 
+                        size="large" 
+                        color="#000" 
+                        style={{flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10, }} />
+                ) : (
+                    <SafeAreaView>
+                        <View>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <View style={{ padding: 5, display: 'flex', flexDirection: 'row', alignItems: 'center', }} >
+                                    {
+                                        tags.map((tag) => (
+                                            <Button_tag
+                                                id={tag}
+                                                key={tag} 
+                                                tag={tag} 
+                                                changeCurrentTag={ChangeCurrentTag} 
+                                            /> 
+                                        ))
+                                    }
+                                </View>
+                            </ScrollView>
                         </View>
-                    </ScrollView>
-                </View>
-                <View>
+                    <View>
                     <View style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', paddingTop: 10, paddingBottom: 6, paddingLeft: 15, paddingRight: 15, }} >
                         <View> 
                             <Text>Karaganda</Text>
@@ -87,8 +97,8 @@ function Main({navigation}) {
                     </ScrollView>
                 </View>
             </SafeAreaView>
+            )}
         </View>
-    </>
     )
 }
 

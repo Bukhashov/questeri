@@ -1,5 +1,5 @@
 import React ,{ useState, useEffect} from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import {ActivityIndicator, ScrollView, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from '../../component/container';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import config from '../../config';
 
 export default function Link({navigation}) {
+    const [isLoading, setLoading] = useState(true);
     const [saved, setSaved] = useState([]);
     const [uid, setUid] = useState("");
 
@@ -21,7 +22,10 @@ export default function Link({navigation}) {
                         
                         await axios.post(`${config.API_URI}/saved/get/`, {
                             user_id: id
-                        }).then((res) => setSaved(res.data))
+                        }).then((response) => {
+                            setSaved(response.data);
+                            setLoading(false);
+                        })
                     });   
                 }
                 catch(e){
@@ -34,22 +38,29 @@ export default function Link({navigation}) {
 
     return(
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-            <View>
             {
-                saved.map((save) => (
-                    <Container 
-                        key={save.title + save._id}
-                        id={save._id}
-                        navigation={navigation}
-                        description={save.description}
-                        title={save.title}
-                        images={save.imgPath}
-                        tag={save.tag}
-                        city={save.city}
-                    />
-                ))
+                isLoading ? <ActivityIndicator 
+                    size="large" 
+                    color="#000" 
+                    style={{flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10, }} /> :
+                <View>
+                {
+                    saved.map((save) => (
+                        <Container 
+                            key={save.title + save._id}
+                            id={save._id}
+                            navigation={navigation}
+                            description={save.description}
+                            title={save.title}
+                            images={save.imgPath}
+                            tag={save.tag}
+                            city={save.city}
+                        />
+                    ))
+                }
+                </View>
             }
-            </View>
+           
         </ScrollView>
     )
 }
