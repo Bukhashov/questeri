@@ -42,3 +42,5 @@ with USB
 ````
 expo start --localhost --android
 ````
+
+![main](https://github.com/Bukhashov/questeri/doc/image/main.jpg)

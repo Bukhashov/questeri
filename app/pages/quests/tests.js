@@ -23,6 +23,7 @@ export default function Tests(props){
     const [auth, setAuth] = useState(false);
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState(false);
+    const [numberTests, setNumberTests] = useState(0)
     const [ball, setBall] = useState(0);
     
     useFocusEffect(
@@ -42,6 +43,8 @@ export default function Tests(props){
                         questeri_id: props.route.params.content.id
                     }).then((response) => {
                         setTests(response.data)
+                        console.log(typeof(response.data.length))
+                        setNumberTests(response.data.length)
                         setLoading(false)
                     })
                 }
@@ -109,7 +112,7 @@ export default function Tests(props){
                                 isLoading 
                                 ?  <ActivityIndicator size="large" 
                                     color="#000" 
-                                    style={{flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10, }} />
+                                    style={{flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25, }} />
                                 : <View style={result ? {display: 'none'} : {display: 'flex'}}>
                                 <View style={{paddingTop: 15, paddingLeft: 20, paddingRight: 20}}>
                                 <Text style={{color: "", fontSize: 18, textAlign: 'center', }}>{testCount+1}. {tests[testCount].question}</Text>
@@ -152,14 +155,17 @@ export default function Tests(props){
                                     </TouchableOpacity>
                                 </View>
                                 </View>
-                            </View>
-                                
+                            </View>                                
                             }
-                            
-                            
-                            
-                            <View style={result ? {display: 'flex'} : {display: 'none'}}>
-                                <Text>{ball}</Text>
+                            <View style={result ? {paddingTop: 25, display: 'flex', flexDirection: 'row', justifyContent: 'center'} : {display: 'none'}}>
+                                    <View style={{display: 'flex', }}>
+                                        <Text style={{padding: 15}}>Suraqtar sany</Text>
+                                        <Text style={{padding: 15}}>Durys jaýaptar sany</Text>
+                                    </View>
+                                    <View style={{display: 'flex', }}>
+                                        <Text style={{padding: 15}}>{numberTests}</Text>
+                                        <Text style={{padding: 15}}>{ball}</Text>
+                                    </View>
                             </View>
                         </View>
                     </ScrollView>
