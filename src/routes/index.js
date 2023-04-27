@@ -5,6 +5,7 @@ const Auth = require('../controller/auth');
 const Questeri = require('../controller/questeri');
 const Saved = require('../controller/saved');
 const Test = require('../controller/test');
+
 // auth
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);

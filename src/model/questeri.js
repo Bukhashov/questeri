@@ -6,6 +6,8 @@ const questeri = new Schema({
     imgPath:        {type: Array},
     tag:            {type: String},
     city:           {type: String},
+    price:          {type: Number},
+    award:          {type: Number},
     map: {
         x: {type: Number},
         y: {type: Number}

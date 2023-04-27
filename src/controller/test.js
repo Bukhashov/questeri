@@ -1,4 +1,6 @@
 const testModel = require('../model/test');
+const questeriModel = require('../model/questeri');
+const userModel = require('../model/user');
 
 class Tests{
     // post
@@ -43,8 +45,12 @@ class Tests{
         const answers = JSON.parse(req.body.answers);
 
         const tests = await testModel.find({questeri_id: questeriId});
+        const questeri = await questeriModel.findById(questeriId);
+        const user = await userModel.findById(userId);
         
+        let balance = user.balance;
         let countСorrectAnswers = 0
+        
         if(tests.length >= 1){
             for(let tst=0; tst < tests.length; tst++){
                 for(let ans=0; ans < answers.length; ans++){
@@ -53,6 +59,15 @@ class Tests{
                     }
                 }
             }
+            if(countСorrectAnswers == tests.length) {
+                user.updateOne({balance: balance+questeri.award})
+
+                res.status(200).json({ 
+                    count: countСorrectAnswers,
+                    balance: balance+questeri.award
+                });
+            }
+
             res.status(200).json({ count: countСorrectAnswers});
         }else{
             res.status(400)

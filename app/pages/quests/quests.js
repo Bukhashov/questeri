@@ -12,7 +12,7 @@ import config from '../../config';
 import axios from 'axios';
 
 // Globale
-const tags = ["barlığı", "qalamen tanysý", "murajaıdaǵy kvesterı", "jergilikti taǵamdar", "balalarǵa arnalǵan"]
+const tags = ["barlığı", "qalamen tanysý", "murajaı", "jergilikti taǵamdar", "balalarǵa arnalǵan"]
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
@@ -27,7 +27,6 @@ function Main({navigation}) {
 
     const featData = async () => {
         try{
-            console.log(`${config.API_URI}/questeri/get/all`)
             await axios.get(`${config.API_URI}/questeri/get/all`)
             .then((response) => {
                 setContainers(response.data)
@@ -90,6 +89,7 @@ function Main({navigation}) {
                                         description={vel.description}
                                         tag={vel.tag}
                                         city={vel.city}
+                                        price={vel.price}
                                     />
                                 ))
                             }

@@ -6,6 +6,9 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 export default function Container(props) {
+    
+    console.log(props.price);
+    
     return(
         <TouchableOpacity key={"container__title_"+props.title+"_id_"+props.id} onPress={() => props.navigation.navigate('container', { 
             content: {
@@ -29,7 +32,10 @@ export default function Container(props) {
                 <View>
                     <Text style={{fontSize: 10, marginBottom: 5}} >{props.description}</Text>
                 </View>
-                
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
+                    <Text>Price: </Text>
+                    <Text>{props.price}</Text>
+                </View>
                 {/* footer */}
                 <View style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
                     <Text>{props.city}</Text>

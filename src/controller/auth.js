@@ -45,7 +45,8 @@ class Auth{
                         fullName: fullName,
                         email: email,
                         password: bcrypt.hashSync(password, salt),
-                        city: 'Karaganda'
+                        city: 'Karaganda',
+                        balance: 0
                     }).save();
                     res.status(200).json({ massage: 'user created' })
                 }else {
