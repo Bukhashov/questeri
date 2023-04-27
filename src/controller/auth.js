@@ -18,7 +18,8 @@ class Auth{
                        uid: user._id,
                        fullname: user.fullName,
                        city: user.city,
-                       email: user.email
+                       email: user.email,
+                       balance: user.balance
                     })
                 }else {
                     res.status(400).json({ massage: "password or email is wrong"})
@@ -46,7 +47,7 @@ class Auth{
                         email: email,
                         password: bcrypt.hashSync(password, salt),
                         city: 'Karaganda',
-                        balance: 0
+                        balance: 2000
                     }).save();
                     res.status(200).json({ massage: 'user created' })
                 }else {

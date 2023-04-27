@@ -60,7 +60,7 @@ class Tests{
                 }
             }
             if(countСorrectAnswers == tests.length) {
-                user.updateOne({balance: balance+questeri.award})
+                user.updateOne({balance: balance+(countСorrectAnswers*5)})
 
                 res.status(200).json({ 
                     count: countСorrectAnswers,
