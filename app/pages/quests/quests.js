@@ -90,6 +90,7 @@ function Main({navigation}) {
                                         tag={vel.tag}
                                         city={vel.city}
                                         price={vel.price}
+                                        auther={vel.auther}
                                     />
                                 ))
                             }

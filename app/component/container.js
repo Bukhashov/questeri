@@ -12,6 +12,7 @@ export default function Container(props) {
     return(
         <TouchableOpacity key={"container__title_"+props.title+"_id_"+props.id} onPress={() => props.navigation.navigate('container', { 
             content: {
+                auther: props.auther,
                 key: props.id,
                 id: props.id,
                 title: props.title,

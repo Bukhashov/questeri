@@ -43,8 +43,6 @@ class Questeri {
             res.status(200).json({data: questeri, 
                 balance: ""
             });
-
-        
         } 
         else {
             res.status(400).json({massage: "id is wrong"})
@@ -61,7 +59,7 @@ class Questeri {
         const map = req.body.map;
         const price = req.body.price;
         const award = req.body.award;
-
+        const auther = req.body.auther;
 
         const newQuesteri = new questeriModel({
             title: title,
@@ -74,6 +72,10 @@ class Questeri {
             map: {
                 x: map.x,
                 y: map.y
+            },
+            auther: {
+                icon: auther.icon,
+                name: auther.name
             }
         }).save()
 

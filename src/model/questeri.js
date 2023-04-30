@@ -11,7 +11,11 @@ const questeri = new Schema({
     map: {
         x: {type: Number},
         y: {type: Number}
-    }    
+    },
+    auther: {
+        icon: {type: String},
+        name: {type: String}
+    }
 });
 
 module.exports = model('questeri', questeri);

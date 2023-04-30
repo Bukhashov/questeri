@@ -14,7 +14,7 @@ var height = Dimensions.get('window').height; //full height
 export default function Content(props) {
     let IconKBU =  "https://www.topuniversities.com/sites/default/files/profiles/logos/academician-y.a.-buketov-karaganda-university_592560cf2aeae70239af52e9_large.jpg"
     
-    const [saved, setSaved] = useState(false)
+    const [saved, setSaved] = useState(false);
     const [uid, setUid] = useState("");
 
     let autherIs = false
@@ -25,8 +25,6 @@ export default function Content(props) {
     if(typeof props.route.params.content.hasOwnProperty('reviews')) reviewsIs = false
     if(typeof props.route.params.content.hasOwnProperty('images')) imagesIs = true
 
-    const autherIcon        = autherIs      ? props.route.params.content.auther.icon        : IconKBU
-    const autherName        = autherIs      ? props.route.params.content.auther.name        : "Akademık E. A. Bóketov atyndaǵy Qaraǵandy ýnıversıtetis"
     const images            = imagesIs      ? props.route.params.content.images             : []
     const reviewsNumber     = reviewsIs     ? props.route.params.content.reviews.number     : 4.9
 
@@ -161,7 +159,7 @@ export default function Content(props) {
                     <View style={{ borderTopWidth: 1, width: width-18, }} />
                 </View>
                 <View style={{ paddingTop: 2, paddingBottom: 12, paddingLeft: 12, paddingRight: 12, }}>
-                    <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Ornalasqan jeri</Text>
+                    <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Оrnalasqan jeri</Text>
                     <Text style={{ paddingBottom: 3, color: '#000'}}>{props.route.params.content.city}</Text>
                 </View>
                 
@@ -170,7 +168,7 @@ export default function Content(props) {
                     <View style={{ borderTopWidth: 1, width: width-18, }} />
                 </View>
                 <View style={{ paddingTop: 2, paddingBottom: 12, paddingLeft: 12, paddingRight: 12, }}>
-                    <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Mańyzdy aqparat</Text>
+                    <Text style={{ paddingBottom: 3, color: '#616A6B'}}>Manyzdy aqparat</Text>
                     <Text style={{ paddingBottom: 3, color: '#000'}}>{props.route.params.content.city}</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -191,9 +189,9 @@ export default function Content(props) {
                         borderRadius: 20,
                     }}>
                         <Image style={{ paddingTop: 5, paddingBottom: 5, paddingRight: 8, 
-                            width: 60, height: 60, borderRadius: 15, }} source={{ uri: autherIcon }} />
+                            width: 60, height: 60, borderRadius: 15, }} source={{ uri: props.route.params.content.auther.icon }} />
                         <View style={{ width: width-62, paddingTop: 5, paddingBottom: 5, paddingRight: 10, paddingLeft: 10, }}>
-                            <Text style={{ textAlign: 'left', }}>{autherName}</Text>
+                            <Text style={{ textAlign: 'left', }}>{props.route.params.content.auther.name}</Text>
                         </View>
                     </View>
                 </View>
