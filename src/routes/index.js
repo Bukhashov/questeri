@@ -10,7 +10,7 @@ const Test = require('../controller/test');
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);
 
-router.get('/questeri/get/all', Questeri.getAll);
+router.get('/questeri/get/:city/all', Questeri.getAll);
 router.get('/questeri/get/:id', Questeri.getById);
 router.post('/questeri/add', Questeri.add);
 

@@ -12,7 +12,7 @@ import config from '../../config';
 import axios from 'axios';
 
 // Globale
-const tags = ["barlığı", "qalamen tanysý", "murajaı", "jergilikti taǵamdar", "balalarǵa arnalǵan"]
+const tags = ["barlyǵy", "qalamen tanysý", "murajaı", "jergilikti taǵamdar", "balalarǵa arnalǵan"]
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
@@ -27,7 +27,7 @@ function Main({navigation}) {
 
     const featData = async () => {
         try{
-            await axios.get(`${config.API_URI}/questeri/get/all`)
+            await axios.get(`${config.API_URI}/questeri/get/Temirtau/all`)
             .then((response) => {
                 setContainers(response.data)
                 setLoading(false)

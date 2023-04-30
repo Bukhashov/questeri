@@ -4,9 +4,8 @@ const userModle = require('../model/user');
 
 class Questeri {
     getAll = async (req, res) => {
-        const questeri = await questeriModel.find({city: 'Karaganda'})
-        
-        console.log("req all questeri")
+        const paramsCity = req.params.city;
+        const questeri = await questeriModel.find({city: paramsCity});
 
         if(questeri.length >= 1) {
             console.log(questeri.length)

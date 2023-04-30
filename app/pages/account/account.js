@@ -10,7 +10,7 @@ export default function Acc({navigation}) {
     const [uid, setUid] = useState("")
     const [userFullName, setUserFullName] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const [userBalance, setUserBalance] = useState("");
+    const [userBalance, setUserBalance] = useState(0);
     const [userCity, setUserCity] = useState("Karaganda");
 
     const imgIconUri = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
@@ -45,7 +45,7 @@ export default function Acc({navigation}) {
         return
     }
     
-    let userInf = [['Tolyq aty', userFullName], ['Email', userEmail], ['Qala', userCity], ['Ball', userBalance]]
+    let userInf = [['Tolyq ataýy', userFullName], ['Email', userEmail], ['Qala', userCity], ['Ball', userBalance]]
 
     return(
         <View key={"navigator_account_main_acc"}>

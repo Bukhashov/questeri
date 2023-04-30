@@ -32,7 +32,7 @@ export default function Singin({navigation}) {
                 async () => await AsyncStorage.setItem('email', res.data.email)
             )
             .then(
-                async () => await AsyncStorage.setItem('balance', res.data.balance)
+                async () => await AsyncStorage.setItem('balance', String(res.data.balance))
             )
             .then(
                 async () => await AsyncStorage.setItem('city', res.data.city)

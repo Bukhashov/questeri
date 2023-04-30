@@ -29,7 +29,7 @@ export default function App() {
                 color={color} 
                 />
             } 
-            else if(route.name === "saqtaý") {
+            else if(route.name === "Saqtaý") {
               return <Ionicons 
                 name={ focused 
                   ? 'bookmark' 
@@ -47,7 +47,7 @@ export default function App() {
                 size={size} color={color} 
               />
             } 
-            else if(route.name === "Account") {
+            else if(route.name === "Akkaýnt") {
               return <Ionicons 
                 name={ focused 
                   ? 'person-circle' 
@@ -62,9 +62,9 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Kvestter" component={Quests} />
-        <Tab.Screen name="saqtaý" component={Like} />
+        <Tab.Screen name="Saqtaý" component={Like} />
         <Tab.Screen name="Karta" component={Map} />
-        <Tab.Screen name="Account" component={Account} />
+        <Tab.Screen name="Akkaýnt" component={Account} />
       </Tab.Navigator>
     </NavigationContainer>
   );
