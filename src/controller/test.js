@@ -46,24 +46,23 @@ class Tests{
     //  ]
     control = async (req, res) => {
         const userId = req.body.user_id;
-        const questeriId = req.body.questeri_id;
         const answers = JSON.parse(req.body.answers);
 
-        const tests = await testModel.find({questeri_id: questeriId});
-        const questeri = await questeriModel.findById(questeriId);
+        const tests = await testModel.find({});
         const user = await userModel.findById(userId);
         
-        let balance = user.balance;
+
         let countСorrectAnswers = 0
         
         if(tests.length >= 1){
-            for(let tst=0; tst < tests.length; tst++){
+            for(let tst=0; tst < tests.length; tst++) {
                 for(let ans=0; ans < answers.length; ans++){
                     if(answers[ans].question == tests[tst].question && answers[ans].answer == tests[tst].answer){
                         countСorrectAnswers += 1
                     }
                 }
             }
+            
             if(countСorrectAnswers == tests.length) {
                 user.updateOne({balance: balance+(countСorrectAnswers*5)})
 
