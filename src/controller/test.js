@@ -21,7 +21,7 @@ class Tests{
     }
     // get
     getAll = async (req, res) => {
-        const allTests = testModel.find({});
+        const allTests = await testModel.find({});
         res.status(200).json(allTests);
     }
     // get
