@@ -23,6 +23,7 @@ router.post('/saved/add', Saved.add);
 router.post('/saved/delete', Saved.delete);
 router.post('/saved/control', Saved.control);
 
+router.get('/test/get/all', Test.getAll);
 router.post('/test/get', Test.getById)
 router.post('/test/control', Test.control)
 router.post('/test/add', Test.add)

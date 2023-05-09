@@ -20,6 +20,11 @@ class Tests{
         res.status(200).json({massage: "saved"})
     }
     // get
+    getAll = async (req, res) => {
+        const allTests = testModel.find({});
+        res.status(200).json(allTests);
+    }
+    // get
     getById = async (req, res) => {
         const questeriId = req.body.questeri_id;
         const test = await testModel.find({questeri_id: questeriId});
