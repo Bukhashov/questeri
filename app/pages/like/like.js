@@ -55,6 +55,7 @@ export default function Link({navigation}) {
                             images={save.imgPath}
                             tag={save.tag}
                             city={save.city}
+                            auther={save.auther}
                         />
                     ))
                 }

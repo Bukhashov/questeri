@@ -5,7 +5,7 @@ const Auth = require('../controller/auth');
 const Questeri = require('../controller/questeri');
 const Saved = require('../controller/saved');
 const Test = require('../controller/test');
-
+const Edu = require('../controller/edu');
 // auth
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);
@@ -13,6 +13,10 @@ router.post('/singup', Auth.singup);
 router.get('/questeri/get/:city/all', Questeri.getAll);
 router.get('/questeri/get/:id', Questeri.getById);
 router.post('/questeri/add', Questeri.add);
+
+router.get('/edu/get/all', Edu.get);
+router.get('/edu/get/:id', Edu.getByID);
+router.post('/edu/add', Edu.add);
 
 router.post('/saved/get/', Saved.getAll);
 router.post('/saved/add', Saved.add);
