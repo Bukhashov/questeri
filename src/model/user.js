@@ -5,6 +5,7 @@ const user = new Schema({
     email:      {type: String},
     password:   {type: String},
     city:       {type: String},
+    tests:      {type: Array},
     balance:    {type: Number}
 });
 

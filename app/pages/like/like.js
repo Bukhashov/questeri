@@ -16,7 +16,7 @@ export default function Link({navigation}) {
             async function getSaved() {
                 try{
                     await AsyncStorage.getItem("uid").then(async (id) => {
-                        if(id == "" || id == null) navigation.navigate("Account");
+                        if(id == "" || id == null) navigation.navigate("Acc");
                         
                         setUid(id)
                         

@@ -60,6 +60,13 @@ class Auth{
             res.status(400).json({ massage: 'enter full name' })
         }
     }
+
+
+    getBallance = async (req, res) =>  {
+        const {id} = req.params;
+        const user = await userModel.findById(id);
+        res.status(200).json({ballance: user.balance});  
+    }
 }
 
 module.exports = new Auth;

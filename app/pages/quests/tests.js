@@ -40,7 +40,8 @@ export default function Tests(props){
                     } 
 
                     axios.post(`${config.API_URI}/test/get`, {
-                        questeri_id: props.route.params.content.id
+                        questeri_id: props.route.params.content.id,
+                        uid: AsyncStorage.getItem('uid').then(vel => vel)
                     }).then((response) => {
                         setTests(response.data)
                         console.log(typeof(response.data.length))

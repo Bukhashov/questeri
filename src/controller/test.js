@@ -26,14 +26,34 @@ class Tests{
     }
     // get
     getById = async (req, res) => {
-        const questeriId = req.body.questeri_id;
-        const test = await testModel.find({questeri_id: questeriId});
+        const { uid, questeriId } = req.body;
         
-        if(test.length >= 1) {
-            res.status(200).send(test);
-        } else {
-            res.status(400).json({massage: "id is wrong"})
+        const test = await testModel.find({questeri_id: questeriId});
+        let control = await userModel.find({_id: uid, tests: questeriId });
+        
+        if(control.length >= 1) {
+            if(test.length >= 1) {
+                res.status(200).send(test);
+            } else {
+                res.status(400).json({massage: "id is wrong"})
+            }
         }
+        else{
+            const questeri = await questeriModel.findById(questeriId);
+            const user = await userModel.findById(uid);
+
+            if(user.balance >= questeri.price) {
+                let newBall = user.balance - questeri.price;
+                let uptest = user.tests;
+                uptest.push(String(questeri._id))
+
+                await user.updateOne({ balance:  newBall, tests: uptest});
+
+            }else{
+                res.status(200).json({massage: "ballance min"})
+            }
+            
+        }       
     }
     //  method: POST
     //  BODY
@@ -51,8 +71,7 @@ class Tests{
         const tests = await testModel.find({});
         const user = await userModel.findById(userId);
         
-
-        let countСorrectAnswers = 0
+        let countСorrectAnswers = 0;
         
         if(tests.length >= 1){
             for(let tst=0; tst < tests.length; tst++) {
@@ -64,7 +83,7 @@ class Tests{
             }
             
             if(countСorrectAnswers == tests.length) {
-                user.updateOne({balance: balance+(countСorrectAnswers*5)})
+                await user.updateOne({balance: balance+(countСorrectAnswers*5)})
 
                 res.status(200).json({ 
                     count: countСorrectAnswers,

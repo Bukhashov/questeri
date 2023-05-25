@@ -20,22 +20,34 @@ function Main({navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [currentTag, setCurrentTag] = useState(tags[0]);
     const [containers, setContainers] = useState([]);
+    const [containerCopy, setContainerCopy] = useState([]);
 
     const ChangeCurrentTag = (newTag) => {
         setCurrentTag(newTag)
+        filterContent(newTag)
     }
 
     const featData = async () => {
         try{
-            await axios.get(`${config.API_URI}/questeri/get/Temirtau/all`)
+            await axios.get(`${config.API_URI}/questeri/get/Karaganda/all`)
             .then((response) => {
                 setContainers(response.data)
+                setContainerCopy(response.data);
                 setLoading(false)
             })
         }catch(e){
             console.log(e)
         }
     }
+    const filterContent = (newTag) => {
+        if(newTag == "barlyǵy") {
+            setContainers(containerCopy);
+        }else{
+            let data = containerCopy.filter((item) => item.tag === newTag).map(({_id, tag, title, imgPath, description, city, price, auther}) => ({_id, tag, title, imgPath, description, city, price, auther}))
+            setContainers(data);
+        }   
+    }
+
     
     useEffect(() => {
         featData()
@@ -95,10 +107,12 @@ function Main({navigation}) {
                                 ))
                             }
                         </View>
+                        <View style={{width: width, height: 280}}/>
                     </ScrollView>
                 </View>
             </SafeAreaView>
             )}
+            
         </View>
     )
 }

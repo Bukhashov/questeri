@@ -9,6 +9,7 @@ const Edu = require('../controller/edu');
 // auth
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);
+router.get('/ballance/:id', Auth.getBallance);
 
 router.get('/questeri/get/:city/all', Questeri.getAll);
 router.get('/questeri/get/:id', Questeri.getById);
