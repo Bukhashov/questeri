@@ -65,7 +65,7 @@ class Tests{
     //      answer:     type string
     //  ]
     control = async (req, res) => {
-        const userId = req.body.user_id;
+        const {userId, questeriId } = req.body.user_id;
         const answers = JSON.parse(req.body.answers);
 
         const tests = await testModel.find({});
@@ -83,15 +83,18 @@ class Tests{
             }
             
             if(countСorrectAnswers == tests.length) {
-                await user.updateOne({balance: balance+(countСorrectAnswers*5)})
+                const q = await questeriModel.findById(questeriId)
+                let newball = user.balance + q.award;
+                await user.updateOne({balance: newball})
 
                 res.status(200).json({ 
                     count: countСorrectAnswers,
                     balance: balance+questeri.award
                 });
             }
-
-            res.status(200).json({ count: countСorrectAnswers});
+            else{
+                res.status(200).json({ count: countСorrectAnswers});
+            }
         }else{
             res.status(400)
         }

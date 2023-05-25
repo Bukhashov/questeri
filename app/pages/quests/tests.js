@@ -38,13 +38,15 @@ export default function Tests(props){
                         setAuth(true)
                         setUid(id)
                     } 
-
-                    axios.post(`${config.API_URI}/test/get`, {
-                        questeri_id: props.route.params.content.id,
-                        uid: AsyncStorage.getItem('uid').then(vel => vel)
+                    console.log(props.route.params.content.id)
+                    console.log(id);
+                    
+                    await axios.post(`${config.API_URI}/test/get`, {
+                        questeriId: props.route.params.content.id,
+                        uid: id
                     }).then((response) => {
                         setTests(response.data)
-                        console.log(typeof(response.data.length))
+                        console.log(response.data)
                         setNumberTests(response.data.length)
                         setLoading(false)
                     })
@@ -84,8 +86,8 @@ export default function Tests(props){
     const onPressFinish = async () => {
         try{
             await axios.post(`${config.API_URI}/test/control`, {
-                user_id: uid,
-                questeri_id: props.route.params.content.id,
+                userId: uid,
+                questeriId: props.route.params.content.id,
                 answers: JSON.stringify(answers)
             }).then((res) => {
                 setResult(true)

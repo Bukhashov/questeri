@@ -3,6 +3,8 @@ import { StyleSheet, Image, Text, TouchableOpacity, View, Dimensions } from 'rea
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInfo from '../../component/user_info';
+import config from '../../config';
+import axios from 'axios';
 
 var width = Dimensions.get('window').width; 
 
@@ -14,6 +16,17 @@ export default function Acc({navigation}) {
     const [userCity, setUserCity] = useState("Karaganda");
 
     const imgIconUri = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+
+
+    const getBallance = async () => {
+        try {
+            console.log(`${config.API_URI}/ballance/${await AsyncStorage.getItem("uid")}`)
+            await axios.get(`${config.API_URI}/ballance/${await AsyncStorage.getItem("uid")}`).then(res => setUserBalance(res.data.ballance))
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
 
     useFocusEffect(
         React.useCallback(() => {
@@ -28,11 +41,10 @@ export default function Acc({navigation}) {
                 await AsyncStorage.getItem("email").then((data) => {
                     setUserEmail(data)
                 })
-                await AsyncStorage.getItem("balance").then((data) => {
-                    setUserBalance(data);
-                })
+                
             }
-            userinfo()
+            userinfo();
+            getBallance();
         }, [])
     )
  
