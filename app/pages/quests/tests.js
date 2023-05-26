@@ -85,6 +85,7 @@ export default function Tests(props){
 
     const onPressFinish = async () => {
         try{
+            console.log("ff");
             await axios.post(`${config.API_URI}/test/control`, {
                 userId: uid,
                 questeriId: props.route.params.content.id,

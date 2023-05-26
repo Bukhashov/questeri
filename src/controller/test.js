@@ -87,14 +87,9 @@ class Tests{
                 let newball = user.balance + q.award;
                 await user.updateOne({balance: newball})
 
-                res.status(200).json({ 
-                    count: countСorrectAnswers,
-                    balance: balance+questeri.award
-                });
             }
-            else{
-                res.status(200).json({ count: countСorrectAnswers});
-            }
+            
+            res.status(200).json({ count: countСorrectAnswers});
         }else{
             res.status(400)
         }
