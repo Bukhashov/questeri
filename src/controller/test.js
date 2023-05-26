@@ -86,7 +86,9 @@ class Tests{
                 const q = await questeriModel.findById(questeriId)
                 let newball = user.balance + q.award;
                 await user.updateOne({balance: newball})
-
+                res.status(200).json({ count: countСorrectAnswers, massage: `siz ${q.award} upaı jınadyńyz`});
+            }else{
+                res.status(200).json({ count: countСorrectAnswers, massage: `ókinishke oraı v upaı jınaı almadynyz`});
             }
             
             res.status(200).json({ count: countСorrectAnswers});
