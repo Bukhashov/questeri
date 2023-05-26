@@ -65,7 +65,7 @@ class Tests{
     //      answer:     type string
     //  ]
     control = async (req, res) => {
-        const {userId, questeriId } = req.body.user_id;
+        const {userId, questeriId } = req.body;
         const answers = JSON.parse(req.body.answers);
 
         const tests = await testModel.find({});
