@@ -68,7 +68,7 @@ class Tests{
         const {userId, questeriId } = req.body;
         const answers = JSON.parse(req.body.answers);
 
-        const tests = await testModel.find({});
+        const tests = await testModel.find({questeri_id: questeriId });
         const user = await userModel.findById(userId);
         
         let countСorrectAnswers = 0;
