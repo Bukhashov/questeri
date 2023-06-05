@@ -28,6 +28,9 @@ router.get('/test/get/all', Test.getAll);
 router.post('/test/get', Test.getById)
 router.post('/test/control', Test.control)
 router.post('/test/add', Test.add)
-router.post('/test/delete', Test.delete)
+router.post('/test/delete', Test.delete);
+
+router.get('/chat/all', );
+router.post('/chat/add', );
 
 module.exports = router

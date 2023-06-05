@@ -25,6 +25,7 @@ export default function Tests(props){
     const [result, setResult] = useState(false);
     const [numberTests, setNumberTests] = useState(0)
     const [ball, setBall] = useState(0);
+    const [massage, setMassage] = useState("");
     
     useFocusEffect(
         React.useCallback(()=> {
@@ -92,7 +93,8 @@ export default function Tests(props){
                 answers: JSON.stringify(answers)
             }).then((res) => {
                 setResult(true)
-                setBall(res.data.count)
+                setBall(res.data.count);
+                setMassage(res.data.massage);
             })
         }catch(e){
             console.log(e)
@@ -161,14 +163,19 @@ export default function Tests(props){
                                 </View>
                             </View>                                
                             }
-                            <View style={result ? {paddingTop: 25, display: 'flex', flexDirection: 'row', justifyContent: 'center'} : {display: 'none'}}>
-                                    <View style={{display: 'flex', }}>
-                                        <Text style={{padding: 15}}>Suraqtar sany</Text>
-                                        <Text style={{padding: 15}}>Durys jaýaptar sany</Text>
+                            <View style={result ? {paddingTop: 25, } : {display: 'none'}}>
+                                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                                        <View style={{display: 'flex', }}>
+                                            <Text style={{padding: 15}}>Suraqtar sany</Text>
+                                            <Text style={{padding: 15}}>Durys jaýaptar sany</Text>
+                                        </View>
+                                        <View style={{display: 'flex', }}>
+                                            <Text style={{padding: 15}}>{numberTests}</Text>
+                                            <Text style={{padding: 15}}>{ball}</Text>
+                                        </View>
                                     </View>
-                                    <View style={{display: 'flex', }}>
-                                        <Text style={{padding: 15}}>{numberTests}</Text>
-                                        <Text style={{padding: 15}}>{ball}</Text>
+                                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                                        <Text style={{padding: 15, fontSize: 18}}>{massage}</Text>
                                     </View>
                             </View>
                         </View>
