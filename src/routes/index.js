@@ -6,6 +6,7 @@ const Questeri = require('../controller/questeri');
 const Saved = require('../controller/saved');
 const Test = require('../controller/test');
 const Edu = require('../controller/edu');
+const Chat = require('../controller/chat');
 // auth
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);
@@ -30,7 +31,7 @@ router.post('/test/control', Test.control)
 router.post('/test/add', Test.add)
 router.post('/test/delete', Test.delete);
 
-router.get('/chat/all', );
-router.post('/chat/add', );
+router.get('/chat/all', Chat.get);
+router.post('/chat/add', Chat.add);
 
 module.exports = router
