@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const chat = new Schema({
-    user_id:       {type: String},
+    fullname:       {type: String},
     massage:       {type: String},
 });
 

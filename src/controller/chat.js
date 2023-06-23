@@ -2,10 +2,10 @@ const chatModel = require('../model/chat');
 
 class Chat {
     add = async (req, res) => {
-        const {uid, massage} = req.body;
+        const {fullname, massage} = req.body;
 
         new chatModel({
-            user_id: uid,
+            fullname: fullname,
             massage: massage
         }).save();
 

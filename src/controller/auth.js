@@ -5,6 +5,7 @@ const saltRounds = 4;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 class Auth{ 
+    // кіру
     singin = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
@@ -32,6 +33,7 @@ class Auth{
         }
 
     }
+    // тіркелу
     singup = async (req, res) => {
         const fullName = req.body.fullname;
         

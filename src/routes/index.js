@@ -1,16 +1,20 @@
+// Роутерлер тізімі 
 const {Router} = require('express');
 const router = Router();
 
+// Роутерлерді орындайтын класстар мен функияларды шақырады
 const Auth = require('../controller/auth');
 const Questeri = require('../controller/questeri');
 const Saved = require('../controller/saved');
 const Test = require('../controller/test');
 const Edu = require('../controller/edu');
 const Chat = require('../controller/chat');
-// auth
+
+// auth қолданушымен жұмыс жасау үшін
 router.post('/singin', Auth.singin);
 router.post('/singup', Auth.singup);
 router.get('/ballance/:id', Auth.getBallance);
+
 
 router.get('/questeri/get/:city/all', Questeri.getAll);
 router.get('/questeri/get/:id', Questeri.getById);
